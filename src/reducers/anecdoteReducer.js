@@ -19,11 +19,11 @@ export const asObject = (anecdoteContent) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
+// const initialState = anecdotesAtStart.map(asObject)
 
 const anecdotesSlice = createSlice({
   name: 'anecdotes', // used to prefix the action type value
-  initialState,
+  initialState: [],
   reducers: {
     vote(state, action) {
       return state.map(anecdote => anecdote.id === action.payload ? { ...anecdote, votes: anecdote.votes + 1 } : anecdote)
@@ -31,9 +31,12 @@ const anecdotesSlice = createSlice({
     createAnecdote(state, action) {
       const newAnecdote = { content: action.payload, id: getId(), votes: 0 }
       return [...state, newAnecdote]
+    },
+    setAnecdotes(state, action) {
+      return action.payload
     }
   }
 })
 
-export const { vote, createAnecdote} = anecdotesSlice.actions
+export const { vote, createAnecdote, setAnecdotes } = anecdotesSlice.actions
 export default anecdotesSlice.reducer
