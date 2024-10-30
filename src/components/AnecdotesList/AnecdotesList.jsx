@@ -4,17 +4,27 @@ import { useSelector, useDispatch } from "react-redux"
 import { vote, setAnecdotes } from "../../reducers/anecdoteReducer"
 import Anecdote from "./Anecdote"
 
-import { getAll } from '../../services/anecdotes.js'
+import AnecdotesService from '../../services/anecdotes.js'
 
 const AnecdoteList = () => {
 
     useEffect(() => {
         const getInitAnecdotes = async () => {
-            const initAnecdotes = await getAll()
+            const initAnecdotes = await AnecdotesService.getAll()
             dispatch(setAnecdotes(initAnecdotes))
         }
         getInitAnecdotes()
     }, [])
+
+    const handleVote = async (anecdote) => {
+        try {
+            await AnecdotesService.vote(anecdote)
+            dispatch(vote(anecdote.id))
+        }
+        catch ({ message }) {
+            console.log(message)
+        }
+    }
 
     const anecdotes = useSelector(state => state.anecdotes)
     const filter = useSelector(state => state.filter).toLowerCase()
@@ -26,7 +36,7 @@ const AnecdoteList = () => {
                 <Anecdote
                     key={anecdote.id}
                     anecdote={anecdote}
-                    handleVote={() => dispatch(vote(anecdote.id))}
+                    handleVote={handleVote}
                 />
             )}
         </div>

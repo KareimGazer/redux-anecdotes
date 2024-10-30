@@ -7,7 +7,7 @@ const Anecdote = ({anecdote, handleVote}) => {
             </div>
             <div>
                 has {votes}
-                <button onClick={handleVote}>vote</button>
+                <button onClick={() => handleVote(anecdote)}>vote</button>
             </div>
         </div>
     )
