@@ -1,4 +1,4 @@
-const Anecdote = ({anecdote, vote}) => {
+const Anecdote = ({anecdote, handleVote}) => {
     const { content, votes } = anecdote
     return (
         <div>
@@ -7,7 +7,7 @@ const Anecdote = ({anecdote, vote}) => {
             </div>
             <div>
                 has {votes}
-                <button onClick={vote}>vote</button>
+                <button onClick={handleVote}>vote</button>
             </div>
         </div>
     )
