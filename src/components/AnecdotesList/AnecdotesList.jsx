@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { vote, getInitAnecdotes } from "../../reducers/anecdoteReducer"
 import Anecdote from "./Anecdote"
+import { notify } from "../../reducers/notificationReducer"
 
 const AnecdoteList = () => {
 
@@ -10,7 +11,10 @@ const AnecdoteList = () => {
         dispatch(getInitAnecdotes())
     }, [])
 
-    const handleVote = async (anecdote) => dispatch(vote(anecdote))
+    const handleVote = async (anecdote) => {
+        dispatch(vote(anecdote))
+        dispatch(notify(`Voted for: **${anecdote.content}**`, 5))
+    }
 
     const anecdotes = useSelector(state => state.anecdotes)
     const filter = useSelector(state => state.filter).toLowerCase()
